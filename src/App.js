@@ -1,25 +1,26 @@
-import logo from './logo.svg';
+
 import './App.css';
 
+// UI组件库: antd-mobile
+import { Button } from 'antd-mobile';
+
+import { routes, routerListener } from './router/index';
+import { useRoutes, useLocation, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+
+
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+  const location = useLocation();
+  const navigator = useNavigate();
+  let [pathname, setPathname] = useState(location.pathname);
+
+  useEffect(
+    routerListener(pathname, navigator),
+    [pathname]
   );
+
+  let element = useRoutes(routes);
+  return element;
 }
 
 export default App;
